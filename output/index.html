@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timer</title>
+    <style>
+      body, html {
+        color: white;
+        background: black;
+        font-family: Lucida Console, monospace;
+        margin: 0;
+      }
+
+      #vue > div {
+        height: 100vh;
+      }
+
+      .go {
+        background: #0b0;
+        color: #fff;
+      }
+
+      .stop {
+        background: #b00;
+        color: #fff;
+      }
+
+      .timer {
+        font-weight: bold;
+        font-size: 400px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-height: 100%;
+      }
+
+      @media only screen and (max-width: 800px) {
+        .timer {
+          font-size: 200px;
+        }
+      }
+
+      .controls {
+        position: fixed;
+        margin: 1rem;
+        display: flex;
+      }
+
+      label {
+        display: block;
+        margin: 0.25rem 0.5rem;
+      }
+
+      input {
+        padding: 0.25rem;
+      }
+
+      sub {
+        font-size: 50%
+      }
+
+      button {
+        padding: 1rem 2rem;
+        margin: 0.25rem 1rem;
+        border: none;
+        border-radius: 0;
+        background: #333;
+        color: white;
+      }
+    </style>
+</head>
+<body>
+<div id="vue">
+    <div :class="{go, stop}" @click="startStop">
+        <div @click.stop class="controls" v-show="paused">
+            <div>
+                <label>Work: <input v-model="workTimeSeconds"></label>
+                <label>Rest: <input v-model="restTimeSeconds"></label>
+            </div>
+            <button @click="resetTimer">Reset</button>
+        </div>
+        <div class="timer">
+            <p>{{ paused ? '⏵' : zeroPaddedTimer }}<sub>{{laps}}</sub></p>
+        </div>
+    </div>
+</div>
+</body>
+<script src="//unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+<script>
+const TimerApp = {
+  data() {
+    return {
+      interval: null,
+      go: false,
+      timer: 0,
+      workTimeSeconds: 45,
+      restTimeSeconds: 15,
+      laps: 0,
+    };
+  },
+  computed: {
+    zeroPaddedTimer() {
+      const maxTime = Math.max(this.workTimeSeconds, this.restTimeSeconds) + '';
+      return (this.timer + '').padStart(maxTime.length, '0');
+    },
+    stop() {
+      return this.go === false;
+    },
+    paused() {
+      return this.interval === null;
+    },
+  },
+  methods: {
+    startStop() {
+      this.interval ? this.stopTimer() : this.startTimer();
+    },
+    startTimer() {
+      this.interval = setInterval(() => {
+        this.timer++;
+        if (!this.go && this.timer > this.restTimeSeconds) {
+          this.go = true;
+          this.timer = 1;
+        }
+        if (this.go && this.timer > this.workTimeSeconds) {
+          this.go = false;
+          this.timer = 1;
+          this.laps++;
+        }
+      }, 1000);
+    },
+    stopTimer() {
+      clearInterval(this.interval);
+      this.interval = null;
+    },
+    resetTimer() {
+      this.timer = 0;
+      this.laps = 0;
+      this.go = true;
+    },
+  },
+  mounted() {
+    document.addEventListener('keyup', e => {
+      if (e.code === 'Enter' || e.code === 'Space') {
+        e.stopPropagation();
+        e.preventDefault();
+        this.startStop();
+      }
+    });
+  }
+};
+
+Vue.createApp(TimerApp).mount('#vue');
+</script>
+</html>
