@@ -1,9 +1,0 @@
-{
-  "type": "module",
-  "scripts": {
-    "build": "echo 'all built!'"
-  },
-  "devDependencies": {
-    "@cloudflare/wrangler": "^1.20.0"
-  }
-}

@@ -1,0 +1,75 @@
+body, html {
+    color: #fff;
+    background: black;
+    font-family: Lucida Console, monospace;
+    margin: 0;
+}
+
+main {
+    height: 100vh;
+    background: var(--t-color-base, #000);
+}
+
+label {
+    display: block;
+    margin: 0.25rem 0.5rem;
+}
+
+input {
+    padding: 0.25rem;
+}
+
+sub {
+    font-size: 50%;
+    align-self: end;
+}
+
+button {
+    padding: 1rem 2rem;
+    margin: 0.25rem 1rem;
+    border: none;
+    border-radius: 0;
+    background: #333;
+    color: white;
+}
+
+.controls {
+    position: fixed;
+    margin: 1rem;
+    display: flex;
+}
+
+.play {
+    display: inline-block;
+    border-top: 0.5em solid transparent;
+    border-bottom: 0.5em solid transparent;
+    border-left: 0.5em solid currentColor;
+}
+
+.go {
+    --t-color-base: #0b0;
+    --t-color-dark: #0b0;
+    --t-color-light: #0f0;
+}
+
+.stop {
+    --t-color-base: #b00;
+    --t-color-dark: #800;
+    --t-color-light: #f00;
+}
+
+.timer {
+    font-weight: bold;
+    font-size: 400px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+    .timer {
+        font-size: 200px;
+    }
+}

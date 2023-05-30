@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "main": "./main.js",
+  "scripts": {
+    "deploy": "wrangler deploy main.js"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.1"
+  }
+}

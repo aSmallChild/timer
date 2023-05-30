@@ -1,0 +1,11 @@
+name = "time-store"
+compatibility_date = "2022-05-10"
+
+[durable_objects]
+bindings = [
+  { name = "WO_TIME_STORE", class_name = "TimeStore" },
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["TimeStore"]
