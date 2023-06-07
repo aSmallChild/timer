@@ -3,5 +3,5 @@ import {createTimer} from '../timer.jsx';
 
 export default function Home() {
   const {Timer} = createTimer();
-  return (<Title>Timer</Title>, <Timer/>);
+  return [<Title>Timer</Title>, <Timer/>];
 }
